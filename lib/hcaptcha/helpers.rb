@@ -7,42 +7,7 @@ module Hcaptcha
       verification_failed: 'reCAPTCHA verification failed, please try again.'
     }.freeze
 
-    def self.hcaptcha
-
-    end
-
-    def self.recaptcha_v3(options = {})
-      site_key = options[:site_key] ||= Hcaptcha.configuration.site_key!
-      action = options.delete(:action) || raise(Hcaptcha::HcaptchaError, 'action is required')
-      id   = options.delete(:id)   || "g-recaptcha-response-" + dasherize_action(action)
-      name = options.delete(:name) || "g-recaptcha-response[#{action}]"
-      options[:render] = site_key
-      options[:script_async] ||= false
-      options[:script_defer] ||= false
-      element = options.delete(:element)
-      element = element == false ? false : :input
-      if element == :input
-        callback = options.delete(:callback) || recaptcha_v3_default_callback_name(action)
-      end
-      options[:class] = "g-recaptcha-response #{options[:class]}"
-
-      html, tag_attributes = components(options)
-      if recaptcha_v3_inline_script?(options)
-        html << recaptcha_v3_inline_script(site_key, action, callback, id, options)
-      end
-      case element
-      when :input
-        html << %(<input type="hidden" name="#{name}" id="#{id}" #{tag_attributes}/>\n)
-      when false
-        # No tag
-        nil
-      else
-        raise(HcaptchaError, "ReCAPTCHA element `#{options[:element]}` is not valid.")
-      end
-      html.respond_to?(:html_safe) ? html.html_safe : html
-    end
-
-    def self.recaptcha_tags(options)
+    def self.hcaptcha(options = {})
       if options.key?(:stoken)
         raise(HcaptchaError, "Secure Token is deprecated. Please remove 'stoken' from your calls to recaptcha_tags.")
       end
@@ -58,49 +23,11 @@ module Hcaptcha
       if noscript != false
         html << <<-HTML
           <noscript>
-            <div>
-              <div style="width: 302px; height: 422px; position: relative;">
-                <div style="width: 302px; height: 422px; position: absolute;">
-                  <iframe
-                    src="#{fallback_uri}"
-                    name="ReCAPTCHA"
-                    style="width: 302px; height: 422px; border-style: none; border: 0; overflow: hidden;">
-                  </iframe>
-                </div>
-              </div>
-              <div style="width: 300px; height: 60px; border-style: none;
-                bottom: 12px; left: 25px; margin: 0px; padding: 0px; right: 25px;
-                background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
-                <textarea id="g-recaptcha-response" name="g-recaptcha-response"
-                  class="g-recaptcha-response"
-                  style="width: 250px; height: 40px; border: 1px solid #c1c1c1;
-                  margin: 10px 25px; padding: 0px; resize: none;">
-                </textarea>
-              </div>
-            </div>
+            <div class="h-captcha" data-sitekey="1161d0be-1130-4af5-8999-b6fa8894e2a8"></div>
           </noscript>
         HTML
       end
 
-      html.respond_to?(:html_safe) ? html.html_safe : html
-    end
-
-    def self.invisible_recaptcha_tags(custom)
-      options = {callback: 'invisibleHcaptchaSubmit', ui: :button}.merge(custom)
-      text = options.delete(:text)
-      html, tag_attributes = components(options.dup)
-      html << default_callback(options) if default_callback_required?(options)
-
-      case options[:ui]
-      when :button
-        html << %(<button type="submit" #{tag_attributes}>#{text}</button>\n)
-      when :invisible
-        html << %(<div data-size="invisible" #{tag_attributes}></div>\n)
-      when :input
-        html << %(<input type="submit" #{tag_attributes} value="#{text}"/>\n)
-      else
-        raise(HcaptchaError, "ReCAPTCHA ui `#{options[:ui]}` is not valid.")
-      end
       html.respond_to?(:html_safe) ? html.html_safe : html
     end
 
