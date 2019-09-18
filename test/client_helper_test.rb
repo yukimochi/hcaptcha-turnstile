@@ -1,10 +1,10 @@
 require_relative 'helper'
 
 describe 'View helpers' do
-  include Recaptcha::Adapters::ViewMethods
+  include Hcaptcha::Adapters::ViewMethods
 
   it "uses ssl" do
-    recaptcha_tags.must_include "\"#{Recaptcha.configuration.api_server_url}\""
+    recaptcha_tags.must_include "\"#{Hcaptcha.configuration.api_server_url}\""
   end
 
   describe "noscript" do
@@ -23,8 +23,8 @@ describe 'View helpers' do
   end
 
   it "raises without site key" do
-    Recaptcha.configuration.site_key = nil
-    assert_raises Recaptcha::RecaptchaError do
+    Hcaptcha.configuration.site_key = nil
+    assert_raises Hcaptcha::HcaptchaError do
       recaptcha_tags
     end
   end
@@ -100,7 +100,7 @@ describe 'View helpers' do
 
   it "includes the site key in the button attributes" do
     html = invisible_recaptcha_tags
-    html.must_include(" data-sitekey=\"#{Recaptcha.configuration.site_key}\"")
+    html.must_include(" data-sitekey=\"#{Hcaptcha.configuration.site_key}\"")
   end
 
   it "lets you override the site_key from configuration via options hash" do
@@ -120,12 +120,12 @@ describe 'View helpers' do
 
   describe "invisible recaptcha" do
     it "uses ssl" do
-      invisible_recaptcha_tags.must_include "\"#{Recaptcha.configuration.api_server_url}\""
+      invisible_recaptcha_tags.must_include "\"#{Hcaptcha.configuration.api_server_url}\""
     end
 
     it "raises without site key" do
-      Recaptcha.configuration.site_key = nil
-      assert_raises Recaptcha::RecaptchaError do
+      Hcaptcha.configuration.site_key = nil
+      assert_raises Hcaptcha::HcaptchaError do
         invisible_recaptcha_tags
       end
     end
@@ -152,7 +152,7 @@ describe 'View helpers' do
 
     it "includes the site key in the button attributes" do
       html = invisible_recaptcha_tags
-      html.must_include(" data-sitekey=\"#{Recaptcha.configuration.site_key}\"")
+      html.must_include(" data-sitekey=\"#{Hcaptcha.configuration.site_key}\"")
     end
 
     it "doesn't render script tag when verification is disabled" do
@@ -170,12 +170,12 @@ describe 'View helpers' do
 
     it "renders default callback if no callback is given" do
       html = invisible_recaptcha_tags
-      html.must_include("var invisibleRecaptchaSubmit")
+      html.must_include("var invisibleHcaptchaSubmit")
     end
 
     it "doesn't render default callback script if a callback is given" do
       html = invisible_recaptcha_tags(callback: 'customCallback')
-      html.wont_include("var invisibleRecaptchaSubmit")
+      html.wont_include("var invisibleHcaptchaSubmit")
     end
 
     it "includes a nonce if provided" do
@@ -197,7 +197,7 @@ describe 'View helpers' do
     end
 
     it "raises an error on an invalid ui option" do
-      assert_raises Recaptcha::RecaptchaError do
+      assert_raises Hcaptcha::HcaptchaError do
         invisible_recaptcha_tags(ui: :foo)
       end
     end

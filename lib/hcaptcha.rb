@@ -12,14 +12,14 @@ if defined?(Rails)
   require 'hcaptcha/railtie'
 end
 
-module Recaptcha
+module Hcaptcha
   DEFAULT_TIMEOUT = 3
   RESPONSE_LIMIT = 4000
 
-  class RecaptchaError < StandardError
+  class HcaptchaError < StandardError
   end
 
-  class VerifyError < RecaptchaError
+  class VerifyError < HcaptchaError
   end
 
   # Gives access to the current Configuration.

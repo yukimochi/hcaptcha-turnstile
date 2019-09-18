@@ -31,8 +31,8 @@ module Hcaptcha
   #
   class Configuration
     DEFAULTS = {
-      'server_url' => 'https://www.recaptcha.net/recaptcha/api.js',
-      'verify_url' => 'https://www.recaptcha.net/recaptcha/api/siteverify'
+      'server_url' => 'https://hcaptcha.com/1/api.js',
+      'verify_url' => 'https://hcaptcha.com/siteverify'
     }.freeze
 
     attr_accessor :default_env, :skip_verify_env, :secret_key, :site_key, :proxy, :handle_timeouts_gracefully, :hostname

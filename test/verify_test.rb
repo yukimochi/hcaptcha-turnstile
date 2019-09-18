@@ -10,16 +10,16 @@ describe 'controller helpers' do
     @expected_post_data["response"]   = "response"
 
     @controller.params = {:recaptcha_response_field => "response", 'g-recaptcha-response' => 'string'}
-    @expected_post_data["secret"] = Recaptcha.configuration.secret_key
+    @expected_post_data["secret"] = Hcaptcha.configuration.secret_key
 
-    @expected_uri = URI.parse(Recaptcha.configuration.verify_url)
+    @expected_uri = URI.parse(Hcaptcha.configuration.verify_url)
   end
 
   describe "#verify_recaptcha!" do
     it "raises when it fails" do
       @controller.expects(:verify_recaptcha).returns(false)
 
-      assert_raises Recaptcha::VerifyError do
+      assert_raises Hcaptcha::VerifyError do
         @controller.verify_recaptcha!
       end
     end
@@ -41,8 +41,8 @@ describe 'controller helpers' do
     end
 
     it "raises without secret key" do
-      Recaptcha.configuration.secret_key = nil
-      assert_raises Recaptcha::RecaptchaError do
+      Hcaptcha.configuration.secret_key = nil
+      assert_raises Hcaptcha::HcaptchaError do
         @controller.verify_recaptcha
       end
     end
@@ -76,7 +76,7 @@ describe 'controller helpers' do
 
     it "returns true on success without remote_ip" do
       @controller.flash[:recaptcha_error] = "previous error that should be cleared"
-      secret_key = Recaptcha.configuration.secret_key
+      secret_key = Hcaptcha.configuration.secret_key
       stub_request(
         :get,
         "https://www.recaptcha.net/recaptcha/api/siteverify?response=string&secret=#{secret_key}"
@@ -95,9 +95,9 @@ describe 'controller helpers' do
     end
 
     it "blows up on timeout when graceful is disabled" do
-      Recaptcha.with_configuration(handle_timeouts_gracefully: false) do
+      Hcaptcha.with_configuration(handle_timeouts_gracefully: false) do
         expect_http_post.to_timeout
-        assert_raises Recaptcha::RecaptchaError, "Recaptcha unreachable." do
+        assert_raises Hcaptcha::HcaptchaError, "Hcaptcha unreachable." do
           assert @controller.verify_recaptcha
         end
         assert_nil @controller.flash[:recaptcha_error]
@@ -217,13 +217,13 @@ describe 'controller helpers' do
       end
 
       it "raises when invalid custom hostname validation is passed" do
-        assert_raises Recaptcha::RecaptchaError do
+        assert_raises Hcaptcha::HcaptchaError do
           @controller.verify_recaptcha(hostname: 0)
         end
       end
 
       describe "when default hostname validation matches" do
-        around { |test| Recaptcha.with_configuration(hostname: hostname, &test) }
+        around { |test| Hcaptcha.with_configuration(hostname: hostname, &test) }
 
         it "passes" do
           assert @controller.verify_recaptcha
@@ -237,7 +237,7 @@ describe 'controller helpers' do
       end
 
       describe "when default hostname validation does not match" do
-        around { |test| Recaptcha.with_configuration(hostname: "not_#{hostname}", &test) }
+        around { |test| Hcaptcha.with_configuration(hostname: "not_#{hostname}", &test) }
 
         it "fails" do
           refute @controller.verify_recaptcha
@@ -325,7 +325,7 @@ describe 'controller helpers' do
   private
 
   class TestController
-    include Recaptcha::Adapters::ControllerMethods
+    include Hcaptcha::Adapters::ControllerMethods
 
     attr_accessor :request, :params, :flash
 
@@ -337,7 +337,7 @@ describe 'controller helpers' do
     public :verify_recaptcha!
   end
 
-  def expect_http_post(secret_key: Recaptcha.configuration.secret_key)
+  def expect_http_post(secret_key: Hcaptcha.configuration.secret_key)
     stub_request(
       :get,
       "https://www.recaptcha.net/recaptcha/api/siteverify?remoteip=1.1.1.1&response=string&secret=#{secret_key}"

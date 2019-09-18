@@ -9,14 +9,14 @@ require 'webmock/minitest'
 require 'byebug'
 require 'cgi'
 require 'i18n'
-require 'recaptcha'
+require 'hcaptcha'
 
 I18n.enforce_available_locales = false
 
 Minitest::Test.send(:prepend, Module.new do
   def setup
     super
-    Recaptcha.configure do |config|
+    Hcaptcha.configure do |config|
       config.site_key = '0000000000000000000000000000000000000000'
       config.secret_key = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
     end
