@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    recaptcha (5.1.0)
+    hcaptcha (0.0.0)
       json
 
 GEM
@@ -60,12 +60,12 @@ PLATFORMS
 
 DEPENDENCIES
   bump
+  hcaptcha!
   i18n
   maxitest
   mocha
   pry-byebug
   rake
-  recaptcha!
   rubocop
   webmock
 

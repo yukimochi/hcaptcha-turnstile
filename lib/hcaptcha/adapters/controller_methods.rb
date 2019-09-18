@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Recaptcha
+module Hcaptcha
   module Adapters
     module ControllerMethods
       private
@@ -9,14 +9,14 @@ module Recaptcha
       # using the Configuration.
       def verify_recaptcha(options = {})
         options = {model: options} unless options.is_a? Hash
-        return true if Recaptcha.skip_env?(options[:env])
+        return true if Hcaptcha.skip_env?(options[:env])
 
         model = options[:model]
         attribute = options.fetch(:attribute, :base)
         recaptcha_response = options[:response] || recaptcha_response_token(options[:action])
 
         begin
-          verified = if Recaptcha.invalid_response?(recaptcha_response)
+          verified = if Hcaptcha.invalid_response?(recaptcha_response)
             false
           else
             unless options[:skip_remote_ip]
@@ -24,7 +24,7 @@ module Recaptcha
               options = options.merge(remote_ip: remoteip.to_s) if remoteip
             end
 
-            Recaptcha.verify_via_api_call(recaptcha_response, options)
+            Hcaptcha.verify_via_api_call(recaptcha_response, options)
           end
 
           if verified
@@ -34,23 +34,23 @@ module Recaptcha
             recaptcha_error(
               model,
               attribute,
-              options.fetch(:message) { Recaptcha::Helpers.to_error_message(:verification_failed) }
+              options.fetch(:message) { Hcaptcha::Helpers.to_error_message(:verification_failed) }
             )
             false
           end
         rescue Timeout::Error
-          if Recaptcha.configuration.handle_timeouts_gracefully
+          if Hcaptcha.configuration.handle_timeouts_gracefully
             recaptcha_error(
               model,
               attribute,
-              options.fetch(:message) { Recaptcha::Helpers.to_error_message(:recaptcha_unreachable) }
+              options.fetch(:message) { Hcaptcha::Helpers.to_error_message(:recaptcha_unreachable) }
             )
             false
           else
-            raise RecaptchaError, 'Recaptcha unreachable.'
+            raise HcaptchaError, 'Hcaptcha unreachable.'
           end
         rescue StandardError => e
-          raise RecaptchaError, e.message, e.backtrace
+          raise HcaptchaError, e.message, e.backtrace
         end
       end
 

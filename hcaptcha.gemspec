@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require "./lib/recaptcha/version"
+require "./lib/hcaptcha/version"
 
 Gem::Specification.new do |s|
-  s.name        = "recaptcha"
-  s.version     = Recaptcha::VERSION
-  s.authors     = ["Jason L Perry"]
-  s.email       = ["jasper@ambethia.com"]
-  s.homepage    = "http://github.com/ambethia/recaptcha"
-  s.summary     = s.description = "Helpers for the reCAPTCHA API"
+  s.name        = "hcaptcha"
+  s.version     = Hcaptcha::VERSION
+  s.authors     = ["Tyler VanNurden", "Jason L Perry"]
+  s.email       = ["tyler.vannurden@colorado.edu"]
+  s.homepage    = "https://github.com/firstmoversadvantage/hcaptcha"
+  s.summary     = s.description = "Ruby helpers for hCaptcha"
   s.license     = "MIT"
   s.required_ruby_version = '>= 2.3.0'
 
@@ -24,5 +24,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "webmock"
   s.add_development_dependency "rubocop"
 
-  s.metadata = { "source_code_uri" => "https://github.com/ambethia/recaptcha" }
+  s.metadata = { "source_code_uri" => "https://github.com/firstmoversadvantage/hcaptcha" }
 end

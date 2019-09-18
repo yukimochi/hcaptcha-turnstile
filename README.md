@@ -1,7 +1,7 @@
 # reCAPTCHA
 [![Gem Version](https://badge.fury.io/rb/recaptcha.svg)](https://badge.fury.io/rb/recaptcha)
 
-Author:    Jason L Perry (http://ambethia.com)<br/>
+Author:    Tyler VanNurden & Jason L Perry (http://ambethia.com)<br/>
 Copyright: Copyright (c) 2007-2013 Jason L Perry<br/>
 License:   [MIT](http://creativecommons.org/licenses/MIT/)<br/>
 Info:      https://github.com/ambethia/recaptcha<br/>

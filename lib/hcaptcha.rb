@@ -4,12 +4,12 @@ require 'json'
 require 'net/http'
 require 'uri'
 
-require 'recaptcha/configuration'
-require 'recaptcha/helpers'
-require 'recaptcha/adapters/controller_methods'
-require 'recaptcha/adapters/view_methods'
+require 'hcaptcha/configuration'
+require 'hcaptcha/helpers'
+require 'hcaptcha/adapters/controller_methods'
+require 'hcaptcha/adapters/view_methods'
 if defined?(Rails)
-  require 'recaptcha/railtie'
+  require 'hcaptcha/railtie'
 end
 
 module Recaptcha

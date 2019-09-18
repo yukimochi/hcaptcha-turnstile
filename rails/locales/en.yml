@@ -1,5 +1,5 @@
 en:
-  recaptcha:
+  hcaptcha:
     errors:
-      verification_failed: reCAPTCHA verification failed, please try again.
-      recaptcha_unreachable: Oops, we failed to validate your reCAPTCHA response. Please try again.
+      verification_failed: hCaptcha verification failed, please try again.
+      recaptcha_unreachable: Oops, we failed to validate your hCaptcha response. Please try again.

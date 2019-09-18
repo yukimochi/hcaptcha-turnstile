@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-module Recaptcha
+module Hcaptcha
   # This class enables detailed configuration of the recaptcha services.
   #
   # By calling
   #
-  #   Recaptcha.configuration # => instance of Recaptcha::Configuration
+  #   Hcaptcha.configuration # => instance of Hcaptcha::Configuration
   #
   # or
-  #   Recaptcha.configure do |config|
-  #     config # => instance of Recaptcha::Configuration
+  #   Hcaptcha.configure do |config|
+  #     config # => instance of Hcaptcha::Configuration
   #   end
   #
   # you are able to perform configuration updates.
@@ -24,7 +24,7 @@ module Recaptcha
   #
   # Setting the keys with this Configuration
   #
-  #   Recaptcha.configure do |config|
+  #   Hcaptcha.configure do |config|
   #     config.site_key  = '6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy'
   #     config.secret_key = '6Lc6BAAAAAAAAKN3DRm6VA_xxxxxxxxxxxxxxxxx'
   #   end
@@ -50,11 +50,11 @@ module Recaptcha
     end
 
     def secret_key!
-      secret_key || raise(RecaptchaError, "No secret key specified.")
+      secret_key || raise(HcaptchaError, "No secret key specified.")
     end
 
     def site_key!
-      site_key || raise(RecaptchaError, "No site key specified.")
+      site_key || raise(HcaptchaError, "No site key specified.")
     end
 
     def api_server_url

@@ -1,15 +1,19 @@
 # frozen_string_literal: true
 
-module Recaptcha
+module Hcaptcha
   module Helpers
     DEFAULT_ERRORS = {
       recaptcha_unreachable: 'Oops, we failed to validate your reCAPTCHA response. Please try again.',
       verification_failed: 'reCAPTCHA verification failed, please try again.'
     }.freeze
 
+    def self.hcaptcha
+
+    end
+
     def self.recaptcha_v3(options = {})
-      site_key = options[:site_key] ||= Recaptcha.configuration.site_key!
-      action = options.delete(:action) || raise(Recaptcha::RecaptchaError, 'action is required')
+      site_key = options[:site_key] ||= Hcaptcha.configuration.site_key!
+      action = options.delete(:action) || raise(Hcaptcha::HcaptchaError, 'action is required')
       id   = options.delete(:id)   || "g-recaptcha-response-" + dasherize_action(action)
       name = options.delete(:name) || "g-recaptcha-response[#{action}]"
       options[:render] = site_key
@@ -33,17 +37,17 @@ module Recaptcha
         # No tag
         nil
       else
-        raise(RecaptchaError, "ReCAPTCHA element `#{options[:element]}` is not valid.")
+        raise(HcaptchaError, "ReCAPTCHA element `#{options[:element]}` is not valid.")
       end
       html.respond_to?(:html_safe) ? html.html_safe : html
     end
 
     def self.recaptcha_tags(options)
       if options.key?(:stoken)
-        raise(RecaptchaError, "Secure Token is deprecated. Please remove 'stoken' from your calls to recaptcha_tags.")
+        raise(HcaptchaError, "Secure Token is deprecated. Please remove 'stoken' from your calls to recaptcha_tags.")
       end
       if options.key?(:ssl)
-        raise(RecaptchaError, "SSL is now always true. Please remove 'ssl' from your calls to recaptcha_tags.")
+        raise(HcaptchaError, "SSL is now always true. Please remove 'ssl' from your calls to recaptcha_tags.")
       end
 
       noscript = options.delete(:noscript)
@@ -82,7 +86,7 @@ module Recaptcha
     end
 
     def self.invisible_recaptcha_tags(custom)
-      options = {callback: 'invisibleRecaptchaSubmit', ui: :button}.merge(custom)
+      options = {callback: 'invisibleHcaptchaSubmit', ui: :button}.merge(custom)
       text = options.delete(:text)
       html, tag_attributes = components(options.dup)
       html << default_callback(options) if default_callback_required?(options)
@@ -95,7 +99,7 @@ module Recaptcha
       when :input
         html << %(<input type="submit" #{tag_attributes} value="#{text}"/>\n)
       else
-        raise(RecaptchaError, "ReCAPTCHA ui `#{options[:ui]}` is not valid.")
+        raise(HcaptchaError, "ReCAPTCHA ui `#{options[:ui]}` is not valid.")
       end
       html.respond_to?(:html_safe) ? html.html_safe : html
     end
@@ -141,9 +145,9 @@ module Recaptcha
         data_attributes["data-#{data_attribute.to_s.tr('_', '-')}"] = value if value
       end
 
-      unless Recaptcha.skip_env?(env)
-        site_key ||= Recaptcha.configuration.site_key!
-        script_url = Recaptcha.configuration.api_server_url
+      unless Hcaptcha.skip_env?(env)
+        site_key ||= Hcaptcha.configuration.site_key!
+        script_url = Hcaptcha.configuration.api_server_url
         query_params = hash_to_query(
           hl: hl,
           onload: onload,
@@ -206,7 +210,7 @@ module Recaptcha
     end
 
     private_class_method def self.recaptcha_v3_inline_script?(options)
-      !Recaptcha.skip_env?(options[:env]) &&
+      !Hcaptcha.skip_env?(options[:env]) &&
       options[:script] != false &&
       options[:inline_script] != false
     end
@@ -232,7 +236,7 @@ module Recaptcha
     # Returns the name of the JavaScript function that actually executes the reCAPTCHA code (calls
     # grecaptcha.execute). You can call it again later to reset it.
     def self.recaptcha_v3_execute_function_name(action)
-      "executeRecaptchaFor#{sanitize_action_for_js(action)}"
+      "executeHcaptchaFor#{sanitize_action_for_js(action)}"
     end
 
     # Returns the name of an async JavaScript function that executes the reCAPTCHA code.
@@ -241,7 +245,7 @@ module Recaptcha
     end
 
     def self.recaptcha_v3_default_callback_name(action)
-      "setInputWithRecaptchaResponseTokenFor#{sanitize_action_for_js(action)}"
+      "setInputWithHcaptchaResponseTokenFor#{sanitize_action_for_js(action)}"
     end
 
     # v2
@@ -252,7 +256,7 @@ module Recaptcha
 
       <<-HTML
         <script#{nonce_attr}>
-          var invisibleRecaptchaSubmit = function () {
+          var invisibleHcaptchaSubmit = function () {
             var closestForm = function (ele) {
               var curEle = ele.parentNode;
               while (curEle.nodeName !== 'FORM' && curEle.nodeName !== 'BODY'){
@@ -274,8 +278,8 @@ module Recaptcha
     end
 
     private_class_method def self.default_callback_required?(options)
-      options[:callback] == 'invisibleRecaptchaSubmit' &&
-      !Recaptcha.skip_env?(options[:env]) &&
+      options[:callback] == 'invisibleHcaptchaSubmit' &&
+      !Hcaptcha.skip_env?(options[:env]) &&
       options[:script] != false &&
       options[:inline_script] != false
     end
