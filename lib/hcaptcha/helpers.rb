@@ -17,7 +17,7 @@ module Hcaptcha
 
       noscript = options.delete(:noscript)
 
-      html, tag_attributes, fallback_uri = components(options.dup)
+      html, tag_attributes = components(options.dup)
       html << %(<div #{tag_attributes}></div>\n)
 
       if noscript != false
@@ -49,7 +49,6 @@ module Hcaptcha
     private_class_method def self.components(options)
       html = +''
       attributes = {}
-      fallback_uri = +''
 
       options = options.dup
       class_attribute = options.delete(:class)
@@ -83,7 +82,6 @@ module Hcaptcha
       defer_attr = "defer" if script_defer != false
       nonce_attr = " nonce='#{nonce}'" if nonce
       html << %(<script src="#{script_url}" #{async_attr} #{defer_attr} #{nonce_attr}></script>\n) unless skip_script
-      fallback_uri = %(#{script_url.chomp(".js")}/fallback?k=#{site_key})
       attributes["data-sitekey"] = site_key
       attributes.merge! data_attributes
 
@@ -91,7 +89,7 @@ module Hcaptcha
       attributes["class"] = "g-hcaptcha #{class_attribute}"
       tag_attributes = attributes.merge(options).map { |k, v| %(#{k}="#{v}") }.join(" ")
 
-      [html, tag_attributes, fallback_uri]
+      [html, tag_attributes]
     end
 
     private_class_method def self.hash_to_query(hash)
