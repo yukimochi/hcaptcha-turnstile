@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Hcaptcha
-  # This class enables detailed configuration of the recaptcha services.
+  # This class enables detailed configuration of the hcaptcha services.
   #
   # By calling
   #
@@ -17,7 +17,7 @@ module Hcaptcha
   # Your are able to customize all attributes listed below. All values have
   # sensitive default and will very likely not need to be changed.
   #
-  # Please note that the site and secret key for the reCAPTCHA API Access
+  # Please note that the site and secret key for the hCaptcha API Access
   # have no useful default value. The keys may be set via the Shell enviroment
   # or using this configuration. Settings within this configuration always take
   # precedence.
@@ -43,8 +43,8 @@ module Hcaptcha
       @skip_verify_env = %w[test cucumber]
       @handle_timeouts_gracefully = true
 
-      @secret_key = ENV['RECAPTCHA_SECRET_KEY']
-      @site_key = ENV['RECAPTCHA_SITE_KEY']
+      @secret_key = ENV['HCAPTCHA_SECRET_KEY']
+      @site_key = ENV['HCAPTCHA_SITE_KEY']
       @verify_url = nil
       @api_server_url = nil
     end

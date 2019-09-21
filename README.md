@@ -15,7 +15,7 @@ failure.
 
 ## Obtaining a key
 
-Go to the [hCaptcha](https://hcaptcha.com/webmaster/signup) signup page to obtain API keys.
+Go to the [hCaptcha](https://hcaptcha.com/webmaster/signup) signup page to obtain API keys. You'll also need to set a hostname that your application will run from, even for local development. hCaptcha will not work if your application is being served from `localhost` or `127.0.0.1`. You will need to add a hosts entry for local development. See the [hCaptcha docs](https://hcaptcha.com/docs) for how to do this.
 
 ## Rails Installation
 
@@ -25,7 +25,7 @@ gem "hcaptcha"
 
 You can keep keys out of the code base with environment variables or with Rails [secrets](https://api.rubyonrails.org/classes/Rails/Application.html#method-i-secrets).<br/>
 
-In development, you can use the [dotenv](https://github.com/bkeepers/dotenv) gem. (Make sure to add it above `gem 'recaptcha'`.)
+In development, you can use the [dotenv](https://github.com/bkeepers/dotenv) gem. (Make sure to add it above `gem 'hcaptcha'`.)
 
 See [Alternative API key setup](#alternative-api-key-setup) for more ways to configure or override
 keys. See also the
@@ -37,22 +37,22 @@ export HCAPTCHA_SITE_KEY='6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy'
 export HCAPTCHA_SECRET_KEY='6Lc6BAAAAAAAAKN3DRm6VA_xxxxxxxxxxxxxxxxx'
 ```
 
-Add `recaptcha_tags` to the forms you want to protect:
+Add `hcaptcha` to the forms you want to protect:
 
 ```erb
 <%= form_for @foo do |f| %>
   # …
-  <%= recaptcha_tags %>
+  <%= hcaptcha %>
   # …
 <% end %>
 ```
 
-Then, add `verify_recaptcha` logic to each form action that you've protected:
+Then, add `verify_hcaptcha` logic to each form action that you've protected:
 
 ```ruby
 # app/controllers/users_controller.rb
 @user = User.new(params[:user].permit(:name))
-if verify_recaptcha(model: @user) && @user.save
+if verify_hcaptcha(model: @user) && @user.save
   redirect_to @user
 else
   render 'new'
@@ -63,10 +63,10 @@ end
 
 See [sinatra demo](/demo/sinatra) for details.
 
- - add `gem 'recaptcha'` to `Gemfile`
+ - add `gem 'hcaptcha'` to `Gemfile`
  - set env variables
- - `include Recaptcha::Adapters::ViewMethods` where you need `recaptcha_tags`
- - `include Recaptcha::Adapters::ControllerMethods` where you need `verify_recaptcha`
+ - `include Hcaptcha::Adapters::ViewMethods` where you need `recaptcha_tags`
+ - `include Hcaptcha::Adapters::ControllerMethods` where you need `verify_recaptcha`
 
 
 ## reCAPTCHA v2 API and Usage

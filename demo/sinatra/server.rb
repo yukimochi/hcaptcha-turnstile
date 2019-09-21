@@ -1,27 +1,29 @@
 require 'bundler/setup'
 require 'sinatra'
-require 'recaptcha'
+require 'hcaptcha'
 
-# these will only work on localhost ... make your own at https://www.google.com/recaptcha
-Recaptcha.configure do |config|
-  config.site_key  = '6Le7oRETAAAAAETt105rjswZ15EuVJiF7BxPROkY'
-  config.secret_key = '6Le7oRETAAAAAL5a8yOmEdmDi3b2pH7mq5iH1bYK'
+set :bind, 'test.mydomain.com'
+set :port, 3000
+
+Hcaptcha.configure do |config|
+  # config.site_key  = ''
+  # config.secret_key = ''
 end
 
-include Recaptcha::Adapters::ControllerMethods
-include Recaptcha::Adapters::ViewMethods
+include Hcaptcha::Adapters::ControllerMethods
+include Hcaptcha::Adapters::ViewMethods
 
 get '/' do
   <<-HTML
     <form action="/verify">
-      #{recaptcha_tags}
+      #{hcaptcha}
       <input type="submit"/>
     </form>
   HTML
 end
 
 get '/verify' do
-  if verify_recaptcha
+  if verify_hcaptcha
     'YES!'
   else
     'NO!'
