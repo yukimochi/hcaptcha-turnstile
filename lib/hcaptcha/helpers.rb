@@ -22,9 +22,7 @@ module Hcaptcha
 
       if noscript != false
         html << <<-HTML
-          <noscript>
-            <div class="h-captcha" data-sitekey="1161d0be-1130-4af5-8999-b6fa8894e2a8"></div>
-          </noscript>
+          <div class="h-captcha" data-sitekey="1161d0be-1130-4af5-8999-b6fa8894e2a8"></div>
         HTML
       end
 
