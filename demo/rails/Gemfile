@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'rails', '~> 5.2'
 gem 'sqlite3'
-gem 'recaptcha', require: 'recaptcha/rails', path: '../..'
+gem 'hcaptcha', require: 'hcaptcha/rails', path: '../..'
 
 group :development do
   gem 'listen'

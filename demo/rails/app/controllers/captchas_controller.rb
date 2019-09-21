@@ -3,7 +3,7 @@ class CaptchasController < ApplicationController
   end
 
   def create
-    if verify_recaptcha
+    if verify_hcaptcha
       render plain: 'YES'
     else
       render plain: 'NO'

@@ -1,39 +1,26 @@
-# reCAPTCHA
-[![Gem Version](https://badge.fury.io/rb/recaptcha.svg)](https://badge.fury.io/rb/recaptcha)
+# hCaptcha
+[![Gem Version](https://badge.fury.io/rb/hcaptcha.svg)](https://badge.fury.io/rb/hcaptcha)
+
+Disclaimer: This gem is forked from the [recaptcha gem](https://github.com/ambethia/recaptcha). All ideas, including the documentation and demo Rails and Sinatra integrations come from [recaptcha gem](https://github.com/ambethia/recaptcha) but are adoped for the hCaptcha API.
 
 Author:    Tyler VanNurden & Jason L Perry (http://ambethia.com)<br/>
-Copyright: Copyright (c) 2007-2013 Jason L Perry<br/>
 License:   [MIT](http://creativecommons.org/licenses/MIT/)<br/>
-Info:      https://github.com/ambethia/recaptcha<br/>
-Bugs:      https://github.com/ambethia/recaptcha/issues<br/>
+Info:      https://github.com/firstmoversadvantage/hcaptcha<br/>
+Bugs:      https://github.com/firstmoversadvantage/hcaptcha/issues<br/>
 
-This gem provides helper methods for the [reCAPTCHA API](https://www.google.com/recaptcha). In your
-views you can use the `recaptcha_tags` method to embed the needed javascript, and you can validate
-in your controllers with `verify_recaptcha` or `verify_recaptcha!`, which raises an error on
+This gem provides helper methods for the [hCaptcha API](https://hcaptcha.com). In your
+views you can use the `hcaptcha` method to embed the needed javascript, and you can validate
+in your controllers with `verify_hcaptcha` or `verify_hcaptcha!`, which raises an error on
 failure.
 
 ## Obtaining a key
 
-Go to the [reCAPTCHA admin console](https://www.google.com/recaptcha/admin) to obtain a reCAPTCHA API key.
-
-The reCAPTCHA type(s) that you choose for your key will determine which methods to use below.
-
-| reCAPTCHA type                               | Methods to use | Description |
-|----------------------------------------------|----------------|-------------|
-| v3                                           | [`recaptcha_v3`](#recaptcha_v3)                         | Verify requests with a [score](https://developers.google.com/recaptcha/docs/v3#score)
-| v2 Checkbox<br/>("I'm not a robot" Checkbox) | [`recaptcha_tags`](#recaptcha_tags)                     | Validate requests with the "I'm not a robot" checkbox |
-| v2 Invisible<br/>(Invisible reCAPTCHA badge) | [`invisible_recaptcha_tags`](#invisible_recaptcha_tags) | Validate requests in the background |
-
-Note: You can _only_ use methods that match your key's type. You cannot use v2 methods with a v3
-key or use `recaptcha_tags` with a v2 Invisible key, for example. Otherwise you will get an
-error like "Invalid key type" or "This site key is not enabled for the invisible captcha."
-
-Note: Enter `localhost` or `127.0.0.1` as the domain if using in development with `localhost:3000`.
+Go to the [hCaptcha](https://hcaptcha.com/webmaster/signup) signup page to obtain API keys.
 
 ## Rails Installation
 
 ```ruby
-gem "recaptcha"
+gem "hcaptcha"
 ```
 
 You can keep keys out of the code base with environment variables or with Rails [secrets](https://api.rubyonrails.org/classes/Rails/Application.html#method-i-secrets).<br/>
@@ -46,8 +33,8 @@ keys. See also the
 documentation.
 
 ```shell
-export RECAPTCHA_SITE_KEY   = '6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy'
-export RECAPTCHA_SECRET_KEY = '6Lc6BAAAAAAAAKN3DRm6VA_xxxxxxxxxxxxxxxxx'
+export HCAPTCHA_SITE_KEY='6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy'
+export HCAPTCHA_SECRET_KEY='6Lc6BAAAAAAAAKN3DRm6VA_xxxxxxxxxxxxxxxxx'
 ```
 
 Add `recaptcha_tags` to the forms you want to protect:
