@@ -3,8 +3,8 @@
 module Hcaptcha
   module Adapters
     module ViewMethods
-      def hcaptcha
-        ::Hcaptcha::Helpers.hcaptcha(options = {})
+      def hcaptcha_tags(options = {})
+        ::Hcaptcha::Helpers.hcaptcha(options)
       end
     end
   end

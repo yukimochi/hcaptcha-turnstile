@@ -10,7 +10,7 @@ module Hcaptcha
       include Hcaptcha::Adapters::ControllerMethods
     end
 
-    initializer 'recaptcha' do |app|
+    initializer 'hcaptcha' do |app|
       Hcaptcha::Railtie.instance_eval do
         pattern = pattern_from app.config.i18n.available_locales
 
