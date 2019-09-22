@@ -72,42 +72,7 @@ See [sinatra demo](/demo/sinatra) for details.
 
 ### `recaptcha_tags`
 
-The following options are available:
-
-| Option              | Description |
-|---------------------|-------------|
-| `:theme`            | Specify the theme to be used per the API. Available options: `dark` and `light`. (default: `light`) |
-| `:ajax`             | Render the dynamic AJAX captcha per the API. (default: `false`) |
-| `:site_key`         | Override site API key from configuration |
-| `:error`            | Override the error code returned from the hCaptcha API (default: `nil`) |
-| `:size`             | Specify a size (default: `nil`) |
-| `:nonce`            | Optional. Sets nonce attribute for script. Can be generated via `SecureRandom.base64(32)`. (default: `nil`) |
-| `:id`               | Specify an html id attribute (default: `nil`) |
-| `:callback`         | Optional. Name of success callback function, executed when the user submits a successful response |
-| `:expired_callback` | Optional. Name of expiration callback function, executed when the hCaptcha response expires and the user needs to re-verify. |
-| `:error_callback`   | Optional. Name of error callback function, executed when hCaptcha encounters an error (e.g. network connectivity) |
-
-[JavaScript resource (api.js) parameters](https://developers.google.com/recaptcha/docs/invisible#js_param):
-
-| Option              | Description |
-|---------------------|-------------|
-| `:onload`           | Optional. The name of your callback function to be executed once all the dependencies have loaded. (See [explicit rendering](https://developers.google.com/recaptcha/docs/display#explicit_render)) |
-| `:render`           | Optional. Whether to render the widget explicitly. Defaults to `onload`, which will render the widget in the first g-recaptcha tag it finds. (See [explicit rendering](https://developers.google.com/recaptcha/docs/display#explicit_render)) |
-| `:hl`               | Optional. Forces the widget to render in a specific language. Auto-detects the user's language if unspecified. (See [language codes](https://developers.google.com/recaptcha/docs/language)) |
-| `:script`           | Alias for `:external_script`. If you do not need to add a script tag by helper you can set the option to `false`. It's necessary when you add a script tag manualy (default: `true`). |
-| `:external_script`  | Set to `false` to avoid including a script tag for the external `api.js` resource. Useful when including multiple `recaptcha_tags` on the same page. |
-| `:script_async`     | Set to `false` to load the external `api.js` resource synchronously. (default: `true`) |
-| `:script_defer`     | Set to `true` to defer loading of external `api.js` until HTML documen has been parsed. (default: `true`) |
-
-Any unrecognized options will be added as attributes on the generated tag.
-
-You can also override the html attributes for the sizes of the generated `textarea` and `iframe`
-elements, if CSS isn't your thing. Inspect the [source of `recaptcha_tags`](https://github.com/ambethia/recaptcha/blob/master/lib/recaptcha/client_helper.rb)
-to see these options.
-
-Note that you cannot submit/verify the same response token more than once or you will get a
-`timeout-or-duplicate` error code. If you need reset the captcha and generate a new response token,
-then you need to call `grecaptcha.reset()`.
+Use in your views to render the JavaScript widget.
 
 ### `verify_recaptcha`
 
