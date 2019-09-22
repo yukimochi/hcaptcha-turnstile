@@ -1,7 +1,7 @@
 # hCaptcha
 [![Gem Version](https://badge.fury.io/rb/hcaptcha.svg)](https://badge.fury.io/rb/hcaptcha)
 
-Disclaimer: This gem is forked from the [recaptcha gem](https://github.com/ambethia/recaptcha). All ideas, including the documentation and demo Rails and Sinatra integrations come from [recaptcha gem](https://github.com/ambethia/recaptcha) but are adoped for the hCaptcha API.
+Disclaimer: This gem is forked from the [recaptcha gem](https://github.com/ambethia/recaptcha). All ideas, including the documentation and demo Rails and Sinatra integrations come from [recaptcha gem](https://github.com/ambethia/recaptcha) but are adoped for hCaptcha.
 
 Author:    Tyler VanNurden & Jason L Perry (http://ambethia.com)<br/>
 License:   [MIT](http://creativecommons.org/licenses/MIT/)<br/>
@@ -9,13 +9,12 @@ Info:      https://github.com/firstmoversadvantage/hcaptcha<br/>
 Bugs:      https://github.com/firstmoversadvantage/hcaptcha/issues<br/>
 
 This gem provides helper methods for the [hCaptcha API](https://hcaptcha.com). In your
-views you can use the `hcaptcha` method to embed the needed javascript, and you can validate
-in your controllers with `verify_hcaptcha` or `verify_hcaptcha!`, which raises an error on
-failure.
+views you can use the `hcaptcha_tags` method to embed the needed javascript, and you can validate
+in your controllers with `verify_hcaptcha` or `verify_hcaptcha!`.
 
-## Obtaining a key
+## Obtaining a key and setup
 
-Go to the [hCaptcha](https://hcaptcha.com/webmaster/signup) signup page to obtain API keys. You'll also need to set a hostname that your application will run from, even for local development. hCaptcha will not work if your application is being served from `localhost` or `127.0.0.1`. You will need to add a hosts entry for local development. See the [hCaptcha docs](https://hcaptcha.com/docs) for how to do this.
+Go to the [hCaptcha](https://hcaptcha.com/webmaster/signup) signup page to obtain API keys. **You'll also need to set a hostname that your application will run from, even for local development. hCaptcha will not work if your application is being served from `localhost` or `127.0.0.1`. You will need to add a hosts entry for local development.** See the [hCaptcha docs](https://hcaptcha.com/docs) for how to do this.
 
 ## Rails Installation
 
@@ -37,12 +36,12 @@ export HCAPTCHA_SITE_KEY='6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy'
 export HCAPTCHA_SECRET_KEY='6Lc6BAAAAAAAAKN3DRm6VA_xxxxxxxxxxxxxxxxx'
 ```
 
-Add `hcaptcha` to the forms you want to protect:
+Add `hcaptcha_tags` to the forms you want to protect:
 
 ```erb
 <%= form_for @foo do |f| %>
   # …
-  <%= hcaptcha %>
+  <%= hcaptcha_tags %>
   # …
 <% end %>
 ```
@@ -69,7 +68,7 @@ See [sinatra demo](/demo/sinatra) for details.
  - `include Hcaptcha::Adapters::ControllerMethods` where you need `verify_recaptcha`
 
 
-## hCaptcha v2 API and Usage
+## hCaptcha API and Usage
 
 ### `recaptcha_tags`
 
