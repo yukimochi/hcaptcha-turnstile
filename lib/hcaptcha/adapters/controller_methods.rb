@@ -70,12 +70,12 @@ module Hcaptcha
         request.respond_to?(:format) && request.format == :html && respond_to?(:flash)
       end
 
-      # Extracts response token from params. params['g-hcaptcha-response'] should either be a
+      # Extracts response token from params. params['h-captcha-response'] should either be a
       # string or a hash with the action name(s) as keys. If it is a hash, then `action` is used as
       # the key.
       # @return [String] A response token if one was passed in the params; otherwise, `''`
       def hcaptcha_response_token(action = nil)
-        response_param = params['g-hcaptcha-response']
+        response_param = params['h-captcha-response']
         if response_param&.respond_to?(:to_h) # Includes ActionController::Parameters
           response_param[action].to_s
         else

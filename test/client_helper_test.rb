@@ -7,16 +7,6 @@ describe 'View helpers' do
     hcaptcha_tags.must_include "\"#{Hcaptcha.configuration.api_server_url}\""
   end
 
-  describe "noscript" do
-    it "does not add noscript tags when noscript is given" do
-      hcaptcha_tags(noscript: false).wont_include "noscript"
-    end
-
-    it "does not add noscript tags" do
-      hcaptcha_tags.must_include "noscript"
-    end
-  end
-
   it "can include size" do
     html = hcaptcha_tags(size: 10)
     html.must_include("data-size=\"10\"")

@@ -9,7 +9,7 @@ describe 'controller helpers' do
     @expected_post_data["remoteip"]   = @controller.request.remote_ip
     @expected_post_data["response"]   = "response"
 
-    @controller.params = {:hcaptcha_response_field => "response", 'g-hcaptcha-response' => 'string'}
+    @controller.params = {:hcaptcha_response_field => "response", 'h-captcha-response' => 'string'}
     @expected_post_data["secret"] = Hcaptcha.configuration.secret_key
 
     @expected_uri = URI.parse(Hcaptcha.configuration.verify_url)
@@ -166,7 +166,7 @@ describe 'controller helpers' do
     end
 
     it "does not verify via http call when user did not click anything" do
-      @controller.params = { 'g-hcaptcha-response' => ""}
+      @controller.params = { 'h-captcha-response' => ""}
       assert_not_requested :get, %r{\.google\.com}
       assert_equal false, @controller.verify_hcaptcha
       assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
@@ -176,7 +176,7 @@ describe 'controller helpers' do
       # this returns a 400 or 413 instead of a 200 response with error code
       # typical response length is less than 400 characters
       str = "a" * 4001
-      @controller.params = { 'g-hcaptcha-response' => "#{str}"}
+      @controller.params = { 'h-captcha-response' => "#{str}"}
       assert_not_requested :get, %r{\.google\.com}
       assert_equal false, @controller.verify_hcaptcha
       assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]

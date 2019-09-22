@@ -89,7 +89,6 @@ The following options are available:
 | `:callback`         | Optional. Name of success callback function, executed when the user submits a successful response |
 | `:expired_callback` | Optional. Name of expiration callback function, executed when the reCAPTCHA response expires and the user needs to re-verify. |
 | `:error_callback`   | Optional. Name of error callback function, executed when reCAPTCHA encounters an error (e.g. network connectivity) |
-| `:noscript`         | Include `<noscript>` content (default: `true`)|
 
 [JavaScript resource (api.js) parameters](https://developers.google.com/recaptcha/docs/invisible#js_param):
 

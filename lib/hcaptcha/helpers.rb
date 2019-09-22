@@ -15,16 +15,12 @@ module Hcaptcha
         raise(HcaptchaError, "SSL is now always true. Please remove 'ssl' from your calls to hcaptcha_tags.")
       end
 
-      noscript = options.delete(:noscript)
-
       html, tag_attributes = components(options.dup)
       html << %(<div #{tag_attributes}></div>\n)
 
-      if noscript != false
-        html << <<-HTML
-          <div class="h-captcha" data-sitekey="1161d0be-1130-4af5-8999-b6fa8894e2a8"></div>
-        HTML
-      end
+      html << <<-HTML
+        <div class="h-captcha" data-sitekey="1161d0be-1130-4af5-8999-b6fa8894e2a8"></div>
+      HTML
 
       html.respond_to?(:html_safe) ? html.html_safe : html
     end
