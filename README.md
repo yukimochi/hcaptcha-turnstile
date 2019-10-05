@@ -16,6 +16,8 @@ in your controllers with `verify_hcaptcha` or `verify_hcaptcha!`.
 
 Go to the [hCaptcha](https://hcaptcha.com/webmaster/signup) signup page to obtain API keys. **You'll also need to set a hostname that your application will run from, even for local development. hCaptcha will not work if your application is being served from `localhost` or `127.0.0.1`. You will need to add a hosts entry for local development.** See the [hCaptcha docs](https://hcaptcha.com/docs) for how to do this.
 
+The hostname you set it to must be a real hostname, since hCaptcha validates it when you create it in the portal. For example, `example.fmadata.com` does not have a DNS record, but `mydomain.com` does. The DNS record doesn't need to point to your application though, it just has to exist - that's why we added the record into the local hosts file.
+
 ## Rails Installation
 
 ```ruby
