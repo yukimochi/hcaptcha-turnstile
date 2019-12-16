@@ -19,7 +19,7 @@ module Hcaptcha
       html << %(<div #{tag_attributes}></div>\n)
 
       html << <<-HTML
-        <div class="h-captcha" data-sitekey="1161d0be-1130-4af5-8999-b6fa8894e2a8"></div>
+        <div class="h-captcha" data-sitekey="#{Hcaptcha.configuration.site_key!}"></div>
       HTML
 
       html.respond_to?(:html_safe) ? html.html_safe : html
@@ -80,7 +80,7 @@ module Hcaptcha
       attributes.merge! data_attributes
 
       # The remaining options will be added as attributes on the tag.
-      attributes["class"] = "g-hcaptcha #{class_attribute}"
+      attributes["class"] = "hcaptcha #{class_attribute}"
       tag_attributes = attributes.merge(options).map { |k, v| %(#{k}="#{v}") }.join(" ")
 
       [html, tag_attributes]
