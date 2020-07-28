@@ -8,3 +8,5 @@ pkg
 .rbenv-gemsets
 
 /demo/*/Gemfile.lock
+
+/.idea/

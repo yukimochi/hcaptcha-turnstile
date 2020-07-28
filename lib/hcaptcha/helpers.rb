@@ -19,7 +19,7 @@ module Hcaptcha
       html << %(<div #{tag_attributes}></div>\n)
 
       html << <<-HTML
-        <div class="h-captcha" data-sitekey="#{Hcaptcha.configuration.site_key!}"></div>
+        <div class="h-captcha" data-sitekey="#{Hcaptcha.configuration.site_key!}" data-theme="dark"></div>
       HTML
 
       html.respond_to?(:html_safe) ? html.html_safe : html
