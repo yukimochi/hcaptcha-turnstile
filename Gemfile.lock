@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hcaptcha (6.0.2)
+    hcaptcha (7.0.1)
       json
 
 GEM

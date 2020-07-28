@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module Hcaptcha
-  VERSION = '6.0.2'
+  VERSION = '7.0.1'
 end
