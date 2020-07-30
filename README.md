@@ -1,12 +1,16 @@
 # hCaptcha
 [![Gem Version](https://badge.fury.io/rb/hcaptcha.svg)](https://badge.fury.io/rb/hcaptcha)
 
-Disclaimer: This gem is forked from the [recaptcha gem](https://github.com/ambethia/recaptcha). All ideas, including the documentation and demo Rails and Sinatra integrations come from [recaptcha gem](https://github.com/ambethia/recaptcha) but are adoped for hCaptcha.
+## Credits
 
-Author:    Tyler VanNurden & Jason L Perry (http://ambethia.com)<br/>
-License:   [MIT](http://creativecommons.org/licenses/MIT/)<br/>
-Info:      https://github.com/firstmoversadvantage/hcaptcha<br/>
-Bugs:      https://github.com/firstmoversadvantage/hcaptcha/issues<br/>
+* https://github.com/Retrospring/hcaptcha
+* https://github.com/firstmoversadvantage/hcaptcha
+* https://github.com/ambethia/recaptcha
+
+## Overview
+
+License:   [MIT](http://creativecommons.org/licenses/MIT/)  
+Bugs:      https://github.com/firstmoversadvantage/hcaptcha/issues
 
 This gem provides helper methods for the [hCaptcha API](https://hcaptcha.com). In your
 views you can use the `hcaptcha_tags` method to embed the needed javascript, and you can validate
@@ -24,19 +28,17 @@ The hostname you set it to must be a real hostname, since hCaptcha validates it 
 gem "hcaptcha"
 ```
 
-You can keep keys out of the code base with environment variables or with Rails [secrets](https://api.rubyonrails.org/classes/Rails/Application.html#method-i-secrets).<br/>
-
-In development, you can use the [dotenv](https://github.com/bkeepers/dotenv) gem. (Make sure to add it above `gem 'hcaptcha'`.)
-
-See [Alternative API key setup](#alternative-api-key-setup) for more ways to configure or override
-keys. See also the
-[Configuration](https://www.rubydoc.info/github/ambethia/recaptcha/master/Recaptcha/Configuration)
-documentation.
+You can keep keys out of the code base with environment variables or with Rails [secrets](https://api.rubyonrails.org/classes/Rails/Application.html#method-i-secrets).
 
 ```shell
 export HCAPTCHA_SITE_KEY='6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy'
 export HCAPTCHA_SECRET_KEY='6Lc6BAAAAAAAAKN3DRm6VA_xxxxxxxxxxxxxxxxx'
 ```
+
+
+`include Hcaptcha::Adapters::ViewMethods` where you need `recaptcha_tags`
+
+`include Hcaptcha::Adapters::ControllerMethods` where you need `verify_recaptcha`
 
 Add `hcaptcha_tags` to the forms you want to protect:
 
@@ -60,26 +62,17 @@ else
 end
 ```
 
-## Sinatra / Rack / Ruby installation
-
-See [sinatra demo](/demo/sinatra) for details.
-
- - add `gem 'hcaptcha'` to `Gemfile`
- - set env variables
- - `include Hcaptcha::Adapters::ViewMethods` where you need `recaptcha_tags`
- - `include Hcaptcha::Adapters::ControllerMethods` where you need `verify_recaptcha`
-
 
 ## hCaptcha API and Usage
 
-### `recaptcha_tags`
+### `hcaptcha_tags`
 
 Use in your views to render the JavaScript widget.
 
 ### `verify_recaptcha`
 
 This method returns `true` or `false` after processing the response token from the hCaptcha widget.
-This is usually called from your controller, as seen [above](#rails-installation).
+This is usually called from your controller.
 
 Passing in the ActiveRecord object via `model: object` is optional. If you pass a `model`—and the
 captcha fails to verify—an error will be added to the object for you to use (available as
@@ -120,41 +113,5 @@ en:
 By default, hCaptcha is skipped in "test" and "cucumber" env. To enable it during test:
 
 ```ruby
-Recaptcha.configuration.skip_verify_env.delete("test")
-```
-
-## Alternative API key setup
-
-### Recaptcha.configure
-
-```ruby
-# config/initializers/recaptcha.rb
-Recaptcha.configure do |config|
-  config.site_key  = '6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy'
-  config.secret_key = '6Lc6BAAAAAAAAKN3DRm6VA_xxxxxxxxxxxxxxxxx'
-  # Uncomment the following line if you are using a proxy server:
-  # config.proxy = 'http://myproxy.com.au:8080'
-end
-```
-
-### Recaptcha.with_configuration
-
-For temporary overwrites (not thread safe).
-
-```ruby
-Recaptcha.with_configuration(site_key: '12345') do
-  # Do stuff with the overwritten site_key.
-end
-```
-
-### Per call
-
-Pass in keys as options at runtime, for code base with multiple hCaptcha setups:
-
-```ruby
-recaptcha_tags site_key: '6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy'
-
-# and
-
-verify_recaptcha secret_key: '6Lc6BAAAAAAAAKN3DRm6VA_xxxxxxxxxxxxxxxxx'
+Hcaptcha.configuration.skip_verify_env.delete("test")
 ```

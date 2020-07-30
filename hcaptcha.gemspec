@@ -5,9 +5,9 @@ require "./lib/hcaptcha/version"
 Gem::Specification.new do |s|
   s.name        = "hcaptcha"
   s.version     = Hcaptcha::VERSION
-  s.authors     = ["Tyler VanNurden", "Jason L Perry"]
-  s.email       = ["tyler.vannurden@colorado.edu"]
-  s.homepage    = "https://github.com/firstmoversadvantage/hcaptcha"
+  s.authors     = ["Christopher Harrison"]
+  s.email       = ["chris.harrison@nexusmods.com"]
+  s.homepage    = "https://github.com/Nexus-Mods/hcaptcha"
   s.summary     = s.description = "Ruby helpers for hCaptcha"
   s.license     = "MIT"
   s.required_ruby_version = '>= 2.3.0'
@@ -24,5 +24,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "webmock"
   s.add_development_dependency "rubocop"
 
-  s.metadata = { "source_code_uri" => "https://github.com/firstmoversadvantage/hcaptcha" }
+  s.metadata = { "source_code_uri" => "https://github.com/Nexus-Mods/hcaptcha" }
 end
