@@ -1,5 +1,5 @@
 en:
   hcaptcha:
     errors:
-      verification_failed: hCaptcha verification failed, please try again.
-      recaptcha_unreachable: Oops, we failed to validate your hCaptcha response. Please try again.
+      verification_failed: Turnstile verification failed, please try again.
+      recaptcha_unreachable: Oops, we failed to validate your Turnstile response. Please try again.

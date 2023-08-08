@@ -51,14 +51,14 @@ describe 'controller helpers' do
       expect_http_post.to_return(body: %({"foo":"false", "bar":"invalid-site-secret-key"}))
 
       refute @controller.verify_hcaptcha
-      assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
+      assert_equal "Turnstile verification failed, please try again.", @controller.flash[:hcaptcha_error]
     end
 
     it "adds an error to the model" do
       expect_http_post.to_return(body: %({"foo":"false", "bar":"bad-news"}))
 
       errors = mock
-      errors.expects(:add).with(:base, "hCaptcha verification failed, please try again.")
+      errors.expects(:add).with(:base, "Turnstile verification failed, please try again.")
       model = mock(errors: errors)
 
       refute @controller.verify_hcaptcha(model: model)
@@ -90,7 +90,7 @@ describe 'controller helpers' do
       expect_http_post.to_timeout
       refute @controller.verify_hcaptcha
       @controller.flash[:hcaptcha_error].must_equal(
-        "Oops, we failed to validate your hCaptcha response. Please try again."
+        "Oops, we failed to validate your Turnstile response. Please try again."
       )
     end
 
@@ -107,7 +107,7 @@ describe 'controller helpers' do
     it "uses I18n for the failed message" do
       I18n.locale = :de
       verification_failed_translated   = "Sicherheitscode konnte nicht verifiziert werden."
-      verification_failed_default      = "hCaptcha verification failed, please try again."
+      verification_failed_default      = "Turnstile verification failed, please try again."
 
       I18n.expects(:translate).
         with('hcaptcha.errors.verification_failed', default: verification_failed_default).
@@ -125,7 +125,7 @@ describe 'controller helpers' do
     it "uses I18n for the timeout message" do
       I18n.locale = :de
       hcaptcha_unreachable_translated = "Netzwerkfehler, bitte versuchen Sie es später erneut."
-      hcaptcha_unreachable_default    = "Oops, we failed to validate your hCaptcha response. Please try again."
+      hcaptcha_unreachable_default    = "Oops, we failed to validate your Turnstile response. Please try again."
 
       I18n.expects(:translate).
         with('hcaptcha.errors.hcaptcha_unreachable', default: hcaptcha_unreachable_default).
@@ -144,7 +144,7 @@ describe 'controller helpers' do
       api_error_translated = "Bad news, body :("
       expect_http_post.to_return(body: %({"foo":"false", "bar":"bad-news"}))
       I18n.expects(:translate).
-        with('hcaptcha.errors.verification_failed', default: 'hCaptcha verification failed, please try again.').
+        with('hcaptcha.errors.verification_failed', default: 'Turnstile verification failed, please try again.').
         returns(api_error_translated)
 
       refute @controller.verify_hcaptcha
@@ -155,7 +155,7 @@ describe 'controller helpers' do
       expect_http_post.to_return(body: %({"foo":"false", "bar":"bad-news"}))
 
       refute @controller.verify_hcaptcha
-      assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
+      assert_equal "Turnstile verification failed, please try again.", @controller.flash[:hcaptcha_error]
     end
 
     it "does not flash error when request was not html" do
@@ -169,7 +169,7 @@ describe 'controller helpers' do
       @controller.params = { 'cf-turnstile-response' => ""}
       assert_not_requested :get, %r{\.hcaptcha\.com}
       assert_equal false, @controller.verify_hcaptcha
-      assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
+      assert_equal "Turnstile verification failed, please try again.", @controller.flash[:hcaptcha_error]
     end
 
     it "does not verify via http call when response length exceeds RESPONSE_LIMIT" do
@@ -180,7 +180,7 @@ describe 'controller helpers' do
       @controller.params = { 'cf-turnstile-response' => "#{str}"}
       assert_not_requested :get, %r{\.hcaptcha\.com}
       assert_equal false, @controller.verify_hcaptcha
-      assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
+      assert_equal "Turnstile verification failed, please try again.", @controller.flash[:hcaptcha_error]
     end
 
     describe ':hostname' do
@@ -209,7 +209,7 @@ describe 'controller helpers' do
         expect_http_post.to_return(body: %({"success":true, "hostname": "not_#{hostname}"}))
 
         refute @controller.verify_hcaptcha(hostname: hostname)
-        assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
+        assert_equal "Turnstile verification failed, please try again.", @controller.flash[:hcaptcha_error]
       end
 
       it "check with call when callable custom hostname validation is passed" do
@@ -233,7 +233,7 @@ describe 'controller helpers' do
 
         it "fails when custom validation does not match" do
           refute @controller.verify_hcaptcha(hostname: "not_#{hostname}")
-          assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
+          assert_equal "Turnstile verification failed, please try again.", @controller.flash[:hcaptcha_error]
         end
       end
 
@@ -242,7 +242,7 @@ describe 'controller helpers' do
 
         it "fails" do
           refute @controller.verify_hcaptcha
-          assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
+          assert_equal "Turnstile verification failed, please try again.", @controller.flash[:hcaptcha_error]
         end
 
         it "passes when custom validation matches" do
@@ -362,6 +362,6 @@ describe 'controller helpers' do
   end
 
   def assert_flash_error
-    assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
+    assert_equal "Turnstile verification failed, please try again.", @controller.flash[:hcaptcha_error]
   end
 end

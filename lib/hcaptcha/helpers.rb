@@ -3,8 +3,8 @@
 module Hcaptcha
   module Helpers
     DEFAULT_ERRORS = {
-      hcaptcha_unreachable: 'Oops, we failed to validate your hCaptcha response. Please try again.',
-      verification_failed: 'hCaptcha verification failed, please try again.'
+      hcaptcha_unreachable: 'Oops, we failed to validate your Turnstile response. Please try again.',
+      verification_failed: 'Turnstile verification failed, please try again.'
     }.freeze
     DEFAULT_OPTIONS = {
       external_script: true,

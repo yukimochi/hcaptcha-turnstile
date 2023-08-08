@@ -47,7 +47,7 @@ module Hcaptcha
             )
             false
           else
-            raise HcaptchaError, 'Hcaptcha unreachable.'
+            raise HcaptchaError, 'Turnstile unreachable.'
           end
         rescue StandardError => e
           raise HcaptchaError, e.message, e.backtrace

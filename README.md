@@ -130,8 +130,8 @@ To override or add new languages, add to `config/locales/*.yml`
 en:
   recaptcha:
     errors:
-      verification_failed: 'hCaptcha was incorrect, please try again.'
-      recaptcha_unreachable: 'hCaptcha verification server error, please try again.'
+      verification_failed: 'Turnstile was incorrect, please try again.'
+      recaptcha_unreachable: 'Turnstile verification server error, please try again.'
 ```
 
 ## Testing
