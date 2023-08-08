@@ -86,7 +86,7 @@ module Hcaptcha
       attributes["data-sitekey"] = options.delete(:site_key) || Hcaptcha.configuration.site_key!
 
       # Forge CSS classes
-      attributes["class"] = "h-captcha #{options.delete(:class)}"
+      attributes["class"] = "cf-turnstile #{options.delete(:class)}"
 
       # Remaining options will be added as attributes on the tag.
       %(<div #{html_attributes(attributes)} #{html_attributes(options)}></div>)

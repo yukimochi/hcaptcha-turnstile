@@ -66,7 +66,7 @@ Available options:
 | `:badge`                | _legacy, ignored_
 | `:callback`             | _see [official documentation](https://docs.hcaptcha.com/configuration)_
 | `:chalexpired_callback` | _see [official documentation](https://docs.hcaptcha.com/configuration)_
-| `:class`                | Additional CSS classes added to `h-captcha` on the placeholder
+| `:class`                | Additional CSS classes added to `cf-turnstile` on the placeholder
 | `:close_callback`       | _see [official documentation](https://docs.hcaptcha.com/configuration)_
 | `:error_callback`       | _see [official documentation](https://docs.hcaptcha.com/configuration)_
 | `:expired_callback`     | _see [official documentation](https://docs.hcaptcha.com/configuration)_
@@ -92,7 +92,7 @@ Available options:
 >
 > For example, `hcaptcha_tags(foo: "bar")` will generate the default script tag and the following placeholder tag:
 > ```html
-> <div class="h-captcha" data-sitekey="…" foo="bar"></div>
+> <div class="cf-turnstile" data-sitekey="…" foo="bar"></div>
 > ```
 
 ### `verify_hcaptcha`
