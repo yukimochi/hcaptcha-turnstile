@@ -1,26 +1,16 @@
-# hCaptcha
-[![Gem Version](https://badge.fury.io/rb/hcaptcha.svg)](https://badge.fury.io/rb/hcaptcha)
+# hCaptcha-turnstile
 
-## Credits
+## Original
 
-* https://github.com/Retrospring/hcaptcha
-* https://github.com/firstmoversadvantage/hcaptcha
-* https://github.com/ambethia/recaptcha
+* https://github.com/Nexus-Mods/hcaptcha
 
 ## Overview
 
 License:   [MIT](http://creativecommons.org/licenses/MIT/)  
-Bugs:      https://github.com/firstmoversadvantage/hcaptcha/issues
 
-This gem provides helper methods for the [hCaptcha API](https://hcaptcha.com). In your
+This gem provides helper methods for the [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/). In your
 views you can use the `hcaptcha_tags` method to embed the needed javascript, and you can validate
 in your controllers with `verify_hcaptcha` or `verify_hcaptcha!`.
-
-## Obtaining a key and setup
-
-Go to the [hCaptcha](https://hcaptcha.com/webmaster/signup) signup page to obtain API keys. **You'll also need to set a hostname that your application will run from, even for local development. hCaptcha will not work if your application is being served from `localhost` or `127.0.0.1`. You will need to add a hosts entry for local development.** See the [hCaptcha docs](https://hcaptcha.com/docs) for how to do this.
-
-The hostname you set it to must be a real hostname, since hCaptcha validates it when you create it in the portal. For example, `example.fmadata.com` does not have a DNS record, but `mydomain.com` does. The DNS record doesn't need to point to your application though, it just has to exist - that's why we added the record into the local hosts file.
 
 ## Installation
 
@@ -30,8 +20,8 @@ bundle add hcaptcha
 ```
 
 Then, set the following environment variables:
-* `HCAPTCHA_SECRET_KEY`
-* `HCAPTCHA_SITE_KEY`
+* `TURNSTILE_SECRET_KEY`
+* `TURNSTILE_SITE_KEY`
 
 > 💡 You should keep keys out of your codebase with external environment variables (using your shell's `export` command), Rails (< 5.2) [secrets](https://guides.rubyonrails.org/v5.1/security.html#custom-secrets), Rails (5.2+) [credentials](https://guides.rubyonrails.org/security.html#custom-credentials), the [dotenv](https://github.com/bkeepers/dotenv) or [figaro](https://github.com/laserlemon/figaro) gems, …
 
@@ -90,7 +80,7 @@ Available options:
 | `:script_async`         | Add `async` attribute to the `<script>` tag (default: `true`)
 | `:script_defer`         | Add `defer` attribute to the `<script>` tag (default: `true`)
 | `:script`               | Generate the `<script>` tag (default: `true`)
-| `:site_key`             | Set hCaptcha Site Key (overrides `HCAPTCHA_SITE_KEY` environment variable)
+| `:site_key`             | Set hCaptcha Site Key (overrides `TURNSTILE_SITE_KEY` environment variable)
 | `:size`                 | _see [official documentation](https://docs.hcaptcha.com/configuration)_
 | `:stoken`               | _legacy, raises an exception_
 | `:ssl`                  | _legacy, raises an exception_

@@ -31,8 +31,8 @@ module Hcaptcha
   #
   class Configuration
     DEFAULTS = {
-      'server_url' => 'https://hcaptcha.com/1/api.js',
-      'verify_url' => 'https://hcaptcha.com/siteverify'
+      'server_url' => 'https://challenges.cloudflare.com/turnstile/v0/api.js',
+      'verify_url' => 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
     }.freeze
 
     attr_accessor :default_env, :skip_verify_env, :secret_key, :site_key, :proxy, :handle_timeouts_gracefully, :hostname
@@ -43,8 +43,8 @@ module Hcaptcha
       @skip_verify_env = %w[test cucumber]
       @handle_timeouts_gracefully = true
 
-      @secret_key = ENV['HCAPTCHA_SECRET_KEY']
-      @site_key = ENV['HCAPTCHA_SITE_KEY']
+      @secret_key = ENV['TURNSTILE_SECRET_KEY']
+      @site_key = ENV['TURNSTILE_SITE_KEY']
       @verify_url = nil
       @api_server_url = nil
     end

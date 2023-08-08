@@ -9,7 +9,7 @@ describe 'controller helpers' do
     @expected_post_data["remoteip"]   = @controller.request.remote_ip
     @expected_post_data["response"]   = "response"
 
-    @controller.params = {:hcaptcha_response_field => "response", 'h-captcha-response' => 'string'}
+    @controller.params = {:hcaptcha_response_field => "response", 'cf-turnstile-response' => 'string'}
     @expected_post_data["secret"] = Hcaptcha.configuration.secret_key
 
     @expected_uri = URI.parse(Hcaptcha.configuration.verify_url)
@@ -166,7 +166,7 @@ describe 'controller helpers' do
     end
 
     it "does not verify via http call when user did not click anything" do
-      @controller.params = { 'h-captcha-response' => ""}
+      @controller.params = { 'cf-turnstile-response' => ""}
       assert_not_requested :get, %r{\.hcaptcha\.com}
       assert_equal false, @controller.verify_hcaptcha
       assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
@@ -177,7 +177,7 @@ describe 'controller helpers' do
       # typical response length seems to be around 4000 characters, can be slightly above that though.
       # This fork bumps the limit to 32767 characters.  Should be more than enough.
       str = "a" * 32768
-      @controller.params = { 'h-captcha-response' => "#{str}"}
+      @controller.params = { 'cf-turnstile-response' => "#{str}"}
       assert_not_requested :get, %r{\.hcaptcha\.com}
       assert_equal false, @controller.verify_hcaptcha
       assert_equal "hCaptcha verification failed, please try again.", @controller.flash[:hcaptcha_error]
